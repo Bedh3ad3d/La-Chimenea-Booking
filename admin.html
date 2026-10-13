@@ -9,7 +9,7 @@ button,input,a.b{font:inherit;padding:7px 12px;margin:6px 6px 0 0;border:1px sol
 <div id="list"></div><p id="err" style="color:#b00020"></p>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.js"></script>
 <script>
-const db=supabase.createClient("https://YOUR-PROJECT.supabase.co","YOUR-ANON-KEY"),$=i=>document.getElementById(i);
+const db=supabase.createClient("https://rhiitscegsjtvmvsgqmp.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJoaWl0c2NlZ3NqdHZtdnNncW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE4OTgwMjUsImV4cCI6MjEwNzQ3NDAyNX0.zOQO9uuXBLYjuT4j4NQp3RSGFSywaidRVwD7VF7Puto"),$=i=>document.getElementById(i);
 const fmt=t=>new Date(t).toLocaleString("en-PH",{dateStyle:"medium",timeStyle:"short",timeZone:"Asia/Manila"});
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const g=d=>new Date(d).toISOString().replace(/[-:]|\.\d{3}/g,"");
