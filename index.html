@@ -1,0 +1,254 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reserve a table | La Chimenea</title>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--wine:#5f1111;--wine2:#7a2a2a;--paper:#fdf6f5;--blush:#efe3e2}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--wine);font:300 15px/1.65 Montserrat,system-ui,sans-serif}
+
+/* header band: the big word sits on the baseline, like the menu cover */
+.top{background:var(--wine);color:var(--paper);padding:22px 30px 0;overflow:hidden}
+.top-in{max-width:640px;margin:0 auto}
+.hours{margin:0;font:400 11px/1.6 Montserrat,sans-serif;letter-spacing:.28em;text-transform:uppercase}
+.top h1{margin:18px 0 0;font:400 clamp(4.8rem,26vw,9.6rem)/.78 "Bodoni Moda",Didot,"Times New Roman",serif;letter-spacing:-.01em;margin-bottom:-.13em;white-space:nowrap}
+
+/* page body with soft leaf shapes behind, as on the menu */
+.wrap{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 1400'%3E%3Cg fill='%23efe3e2'%3E%3Cpath d='M-40 40C80 -10 190 40 230 150C270 260 190 330 210 450C230 570 330 620 300 760C270 900 120 930 40 860C-40 790 -60 640 -50 480C-40 320 -120 120 -40 40Z'/%3E%3Cpath d='M520 700C610 640 700 700 720 800C740 900 650 960 630 1060C610 1160 650 1250 590 1330C530 1410 430 1390 400 1290C370 1190 440 1110 430 1010C420 910 430 760 520 700Z'/%3E%3C/g%3E%3C/svg%3E") no-repeat center top/min(640px,100%) auto;padding:44px 30px 24px}
+.in{max-width:640px;margin:0 auto}
+
+/* each group: a thick vertical rule with the group name rotated beside it */
+.grp{display:grid;grid-template-columns:26px minmax(0,1fr);column-gap:16px;margin-bottom:38px}
+.grp>h2{margin:0;font:300 1.05rem/1 Montserrat,sans-serif;letter-spacing:.3em;text-transform:uppercase;writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;white-space:nowrap}
+.body{border-left:3px solid var(--wine);padding-left:20px}
+.body>label:first-child,.body>div:first-child>label:first-child{margin-top:0}
+
+label{display:block;font:500 11px/1.4 Montserrat,sans-serif;letter-spacing:.3em;text-transform:uppercase;margin:22px 0 4px}
+label small{font:300 11px/1.4 Montserrat,sans-serif;letter-spacing:.08em;text-transform:none}
+input,select,textarea{width:100%;padding:10px 0;font:400 16px/1.4 Montserrat,system-ui,sans-serif;color:var(--wine);background:transparent;border:0;border-bottom:1px solid var(--wine);border-radius:0;appearance:none;-webkit-appearance:none}
+select{padding-right:26px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%235f1111' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 2px center}
+input[type=date]{min-height:44px}
+input[type=file]{padding:12px 0;font-size:14px}
+textarea{border:1px solid var(--wine);padding:10px 12px;margin-top:6px;resize:vertical}
+::placeholder{color:#8f6a6a;opacity:1}
+.hint{font-size:13px;font-style:italic;margin:6px 0 0}
+
+.menu{display:flex;gap:12px;overflow-x:auto;padding:4px 0 10px;margin-top:8px}
+.menu a{flex:none}
+.menu img{height:300px;width:auto;display:block;border:1px solid var(--wine)}
+
+.info{font-size:13px;line-height:1.7;background:rgba(95,17,17,.06);border-left:3px solid var(--wine);padding:12px 14px;margin:0 0 18px}
+.info:empty{display:none}
+.course b{display:block;font:500 12px/1.4 Montserrat,sans-serif;letter-spacing:.3em;text-transform:uppercase;margin-bottom:6px}
+.go,a.go{display:block;width:100%;margin-top:6px;padding:15px;text-align:center;text-decoration:none;font:500 12px/1.2 Montserrat,sans-serif;letter-spacing:.3em;text-transform:uppercase;background:var(--wine);color:var(--paper);border:0;border-radius:0;cursor:pointer}
+.go:hover{background:var(--wine2)}
+.go:disabled{opacity:.45;cursor:not-allowed}
+a{color:var(--wine)}
+#msg{color:#a3131a;font:500 14px/1.5 Montserrat,sans-serif;min-height:1.5em;margin:6px 0 0 42px}
+.hide{display:none!important}
+:focus-visible{outline:3px solid #b8741a;outline-offset:3px}
+
+.qr{display:block;margin:14px 0 6px}
+.qr img{width:100%;height:auto;display:block;border:1px solid var(--wine)}
+.pay p{margin:0 0 12px}
+.calc{font-size:14px}
+.big{font:400 1.7rem/1.2 "Bodoni Moda",serif}
+.done{font:400 1.5rem/1.35 "Bodoni Moda",serif;margin:0}
+
+/* footer, as on the menu */
+footer{background:var(--wine);color:var(--paper);padding:34px 30px 38px;margin-top:20px}
+.ft{max-width:640px;margin:0 auto;display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:flex-end}
+.logo{font:700 clamp(2.6rem,12vw,3.6rem)/.98 Montserrat,sans-serif;letter-spacing:-.045em}
+.ft dl{margin:0;text-align:right;font-size:12px;line-height:1.7;font-weight:300}
+.ft dt{font-weight:600;margin-top:10px}.ft dt:first-child{margin-top:0}
+.ft dd{margin:0}.ft a{color:var(--paper)}
+@media(max-width:480px){.ft dl{text-align:left}.grp{column-gap:12px}.body{padding-left:16px}#msg{margin-left:38px}}
+</style></head><body>
+
+<header class="top"><div class="top-in">
+<p class="hours">Open Tuesday to Sunday &nbsp;·&nbsp; 3:00 PM to 11:00 PM &nbsp;·&nbsp; Closed on Mondays</p>
+<h1>reserve</h1>
+</div></header>
+
+<div class="wrap"><div class="in">
+
+<section id="s1">
+<div class="grp"><h2>Reserve</h2><div class="body">
+<label for="type">Reservation type</label><select id="type"></select>
+<div id="areaRow"><label for="area">Seating area</label><select id="area"></select>
+<p class="hint">The Viewing Deck is available from 5:00 PM.</p></div>
+</div></div>
+
+<div id="course" class="info course hide"><b>Course dinner</b>Kindly message our Instagram page so that the team can handle your course dinner.
+<a class="go" id="iglink" target="_blank" rel="noopener" style="margin-top:14px">Message @lachimenea.cebu</a></div>
+
+<div id="fields">
+<div class="grp"><h2>When</h2><div class="body">
+<label for="day">Date</label><input id="day" type="date">
+<label for="tm">Arrival time</label><select id="tm"></select>
+</div></div>
+
+<div class="grp"><h2>Guests</h2><div class="body">
+<label for="pax">Number of guests <small>(children under 7 not counted)</small></label><input id="pax" type="number" inputmode="numeric" min="1" value="2">
+<label for="decor">Table set-up</label>
+<select id="decor"><option>No set-up</option><option>Eternelle</option><option>Local Kolour</option><option>External decorator or styler</option></select>
+</div></div>
+
+<div class="grp"><h2>Contact</h2><div class="body">
+<label for="nm">Your name</label><input id="nm" autocomplete="name">
+<label for="ct">Mobile number or email</label><input id="ct" autocomplete="email">
+</div></div>
+
+<div class="grp"><h2>Pre-order</h2><div class="body">
+<label for="pre">Pre-order list <small id="preReq">(optional)</small></label>
+<p class="hint">Browse the menu (tap a page to enlarge), then list what you would like.</p>
+<div class="menu"><a href="menu/menu1.jpg" target="_blank" rel="noopener"><img src="menu/menu1.jpg" alt="La Chimenea food menu: starters, soup, pasta and risotto, mains, dessert" loading="lazy"></a><a href="menu/menu2.jpg" target="_blank" rel="noopener"><img src="menu/menu2.jpg" alt="La Chimenea drinks menu: sides, beverages, mocktails, cocktails, wines" loading="lazy"></a></div>
+<textarea id="pre" rows="4" placeholder="e.g. 2 Carbonara, 1 Braised Beef, 3 Iced Tea"></textarea>
+</div></div>
+
+<div class="info" id="info"></div>
+<button class="go" id="book">Reserve</button>
+</div>
+</section>
+
+<section id="s2" class="hide">
+<div class="grp"><h2>Payment</h2><div class="body pay">
+<p class="calc" id="calc"></p>
+<p>Your slot is held while you pay. Send the <span id="paylabel">downpayment</span> of <b class="big" id="amt"></b> by scanning one of the QR codes below, GCash or GoTyme.</p>
+<a class="qr" href="img/qr-payment.jpg" target="_blank" rel="noopener"><img src="img/qr-payment.jpg" alt="La Chimenea GCash and GoTyme payment QR codes"></a>
+<p class="hint">Paying from this phone? <a href="img/qr-payment.jpg" download="La-Chimenea-payment-QR.jpg">Save the QR image</a>, then upload it from your gallery in the GCash or GoTyme scanner.</p>
+<label for="shot">Screenshot of your payment receipt</label><input id="shot" type="file" accept="image/*">
+<button class="go" id="paid" style="margin-top:16px">Send screenshot</button>
+</div></div>
+</section>
+
+<section id="s3" class="hide">
+<div class="grp"><h2>Thank you</h2><div class="body"><p class="done" id="done"></p></div></div>
+</section>
+
+<div id="msg" role="alert"></div>
+</div></div>
+
+<footer><div class="ft">
+<div class="logo">La<br>Chimenea</div>
+<dl>
+<dt>Address</dt><dd>Malubog, Busay, Cebu City, Cebu, Philippines 6000</dd>
+<dt>Contact Number</dt><dd>+63 908 705 8263 | +63 927 872 8838</dd>
+<dt>Social Media Accounts</dt><dd><a href="https://www.instagram.com/lachimenea.cebu/" target="_blank" rel="noopener">@lachimenea.cebu</a> | La Chimenea<br>TikTok @lachimenea.cebu</dd>
+</dl>
+</div></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.js"></script>
+<script>
+// ---- EDIT THESE ----
+const SUPABASE_URL="https://YOUR-PROJECT.supabase.co", SUPABASE_ANON_KEY="YOUR-ANON-KEY";
+const INSTAGRAM="https://www.instagram.com/lachimenea.cebu/";
+// --------------------
+const OPEN=15, CLOSE=23;        // hours, Manila time
+const DECK_FROM=17;             // Viewing Deck opens at 5 PM
+const MAX_REGULAR=20, PREORDER_FROM=16;
+const FEE=500, RATE={weekday:1400,weekend:1800}, DOWN=.3;
+const HOURS={regular:2,exclusive:4};   // must match supabase-setup.sql
+const TYPES=[{name:"Regular (Until 20 pax)",kind:"regular"},{name:"Exclusive",kind:"exclusive"},{name:"Course Dinner",kind:"course"}];
+const AREAS=["By the Fireplace","By the Windows","Viewing Deck"];
+
+const db=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY),$=i=>document.getElementById(i);
+let cap={},bid=null;
+const T=()=>TYPES.find(x=>x.name===$("type").value);
+const msg=t=>$("msg").textContent=t||"";
+const peso=n=>"₱"+n.toLocaleString("en-PH");
+const manilaToday=()=>new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Manila"});
+const manilaMinutes=()=>{const p=new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Manila",hour:"2-digit",minute:"2-digit",hour12:false}).formatToParts(new Date());return(+p.find(x=>x.type==="hour").value%24)*60+ +p.find(x=>x.type==="minute").value};
+const dow=v=>new Date(v+"T00:00:00").getDay();
+const isMonday=v=>!!v&&dow(v)===1;                 // closed on Mondays
+const isWeekend=v=>dow(v)===0||dow(v)===6;
+const maxPax=()=>{const t=T();return t.kind==="regular"?MAX_REGULAR:(cap[$("area").value]||MAX_REGULAR)};
+$("day").min=manilaToday();
+
+function times(){
+  const t=T(),el=$("tm"),keep=el.value;el.innerHTML="";
+  if(t.kind==="course")return;
+  const h0=HOURS[t.kind],start=($("area").value==="Viewing Deck"?DECK_FROM:OPEN)*60;
+  const today=$("day").value===manilaToday(),now=manilaMinutes();
+  for(let m=start;m+h0*60<=CLOSE*60;m+=30){
+    if(today&&m<=now)continue;
+    const h=Math.floor(m/60),mm=m%60,o=document.createElement("option");
+    o.value=String(h).padStart(2,"0")+":"+String(mm).padStart(2,"0");
+    o.textContent=((h+11)%12+1)+":"+String(mm).padStart(2,"0")+(h<12?" AM":" PM");el.appendChild(o)}
+  if(!el.options.length){const o=document.createElement("option");o.textContent="No times left on this date";o.value="";el.appendChild(o)}
+  else if([...el.options].some(o=>o.value===keep))el.value=keep;
+}
+function info(){
+  const t=T(),p=+$("pax").value||0,k=t.kind;
+  $("course").classList.toggle("hide",k!=="course");$("fields").classList.toggle("hide",k==="course");
+  $("areaRow").classList.toggle("hide",k==="course");
+  if(k==="course")return;
+  const max=maxPax();$("pax").min=1;$("pax").max=max;
+  $("preReq").textContent=p>=PREORDER_FROM?"(required for 16 or more guests)":"(optional)";
+  const tail="Table set-ups carry no additional charge. Tables are held 30 minutes after your arrival time. Late arrival counts toward your time.";
+  if(p>max){
+    $("info").textContent=k==="regular"?`Regular reservations are for up to ${MAX_REGULAR} guests. For a bigger group, please choose Exclusive.`:`${$("area").value} seats up to ${max} guests for exclusive use. Please choose another area or message our page.`;
+    $("book").disabled=true;return}
+  $("book").disabled=false;
+  if(k==="regular"){
+    $("info").textContent=`Regular reservations are for up to ${MAX_REGULAR} guests. A ${peso(FEE)} reservation fee secures your table. It is fully consumable and deducted from your bill. `+tail;return}
+  const d=$("day").value;let s=`Exclusive use of ${$("area").value} for ${HOURS.exclusive} hours. `;
+  if(!d)s+=`${peso(RATE.weekday)} per guest on weekdays (Tuesday to Friday) and ${peso(RATE.weekend)} per guest on weekends (Saturday and Sunday). Pick a date to see your total. `;
+  else{const wk=isWeekend(d),rate=wk?RATE.weekend:RATE.weekday,tot=rate*p,due=Math.ceil(tot*DOWN);
+    s+=`${wk?"Weekend":"Weekday"} rate: ${peso(rate)} per guest. Total: ${peso(tot)}. A 30% downpayment of ${peso(due)} is required to confirm your booking, with the balance of ${peso(tot-due)} paid on the day. `}
+  $("info").textContent=s+tail;
+}
+$("type").onchange=()=>{msg();times();info()};
+$("area").onchange=()=>{times();info()};
+$("day").onchange=()=>{if(isMonday($("day").value)){$("day").value="";msg("We're closed on Mondays. Please choose another date.")}else msg();times();info()};
+$("pax").oninput=info;$("decor").onchange=info;
+
+(async()=>{
+  $("type").innerHTML=TYPES.map(t=>`<option>${t.name}</option>`).join("");
+  $("area").innerHTML=AREAS.map(a=>`<option>${a}</option>`).join("");
+  $("iglink").href=INSTAGRAM;
+  const {data,error}=await db.from("areas").select("name,capacity");
+  if(error||!data||!data.length){console.error(error);msg(SUPABASE_URL.includes("YOUR-")?"Setup incomplete: add your Supabase URL and key to index.html.":"We couldn't load the reservation options. Please try again or message our page.");return}
+  data.forEach(a=>cap[a.name]=a.capacity);
+  times();info();
+})();
+
+$("book").onclick=async()=>{
+  msg();const t=T(),p=+$("pax").value;
+  if(isMonday($("day").value)){msg("We're closed on Mondays. Please choose another date.");return}
+  if(!$("day").value||!$("tm").value||!$("nm").value.trim()||!$("ct").value.trim()||!p){msg("Fill in every field.");return}
+  if(p>=PREORDER_FROM&&!$("pre").value.trim()){msg("Add your pre-order list. It is required for 16 or more guests.");return}
+  $("book").disabled=true;
+  const {data,error}=await db.rpc("create_booking",{p_type:t.name,p_pax:p,
+    p_slot:`${$("day").value}T${$("tm").value}:00+08:00`,p_name:$("nm").value,p_contact:$("ct").value,p_decor:$("decor").value,p_area:$("area").value,p_preorder:$("pre").value,p_hours:null});
+  info();
+  if(error){console.error(error);const e=error.message||"";
+    msg(e.includes("CLOSED_MONDAY")?"We're closed on Mondays. Please choose another date.":
+      e.includes("DECK_AFTER_5PM")?"The Viewing Deck is available from 5:00 PM. Please choose a later time or another area.":
+      e.includes("PRIOR_RESERVATION")?"That time already has a prior reservation. Please choose another time.":
+      e.includes("AREA_FULL")?"That area is full at that time. Please choose another time or area.":
+      e.includes("PREORDER_REQUIRED")?"Add your pre-order list. It is required for 16 or more guests.":
+      e.includes("PAST_SLOT")?"That time has already passed. Please choose a later time.":
+      e.includes("COURSE_MESSAGE")?"Course dinners are arranged by our team. Please message our Instagram page.":
+      "We couldn't make that reservation. Please check your details, or message our page.");return}
+  bid=data.id;$("s1").classList.add("hide");
+  if(data.due===0){$("done").textContent="Reservation confirmed. See you then!";$("s3").classList.remove("hide");return}
+  const reg=t.kind==="regular";$("paylabel").textContent=reg?"reservation fee":"downpayment";
+  $("amt").textContent=peso(data.due);
+  $("calc").innerHTML=reg?`Reservation fee <b>${peso(data.due)}</b>, fully consumable and deducted from your bill.`:`Total <b>${peso(data.min_spend)}</b> · Downpayment (30%) <b>${peso(data.due)}</b> · Balance on the day <b>${peso(data.min_spend-data.due)}</b>`;
+  $("s2").classList.remove("hide");window.scrollTo({top:0});
+};
+$("paid").onclick=async()=>{
+  msg();const f=$("shot").files[0];if(!f){msg("Choose your receipt screenshot first.");return}
+  $("paid").disabled=true;
+  const ext=((f.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,""))||"jpg",path=`${bid}-${Date.now()}.${ext}`;
+  const up=await db.storage.from("receipts").upload(path,f);
+  if(up.error){msg("Upload failed: "+up.error.message);$("paid").disabled=false;return}
+  const {data}=await db.rpc("submit_payment",{p_id:bid,p_path:path});
+  if(!data){msg("We couldn't submit your receipt. Please try again or message our page.");$("paid").disabled=false;return}
+  $("s2").classList.add("hide");
+  $("done").textContent="Receipt received. We'll check it and message you to confirm. Your slot stays held while we check it.";
+  $("s3").classList.remove("hide");window.scrollTo({top:0});
+};
+</script></body></html>
